@@ -1,13 +1,12 @@
 <?php
 	include "connect.php";
 
-	$email = $_POST['emailmhs'];
-	$pass = md5($_POST['passmhs']);
-	$query = mysqli_query($conn, "SELECT * FROM identitas WHERE email_mahasiswa='$email' and pass_mahasiswa='$pass'");
-  	$result = mysqli_fetch_array($query);
-
+	$email = $_POST['email'];
+	$password = md5($_POST['password']);
+	$query = mysqli_query($conn, "SELECT * FROM user WHERE email='$email' and password='$password'");
+  $result = mysqli_fetch_array($query);
 	if ($result) {
-		$_SESSION['id'] = $result['id_mahasiswa'];
+	$_SESSION['id'] = $result['id_user'];
 		$_SESSION['status'] = "User";
 ?>
 		<script language="javascript">alert("Login Successful");</script>
@@ -16,8 +15,9 @@
 	}
 	else{
 ?>
+
 		<script language="javascript">alert("Login Failed");</script>
-		<script>document.location.href='../login.php';</script>
+
 <?php
 	}
 	mysqli_close($conn);

@@ -2,7 +2,7 @@
 	include "connect.php";
 
 	$email = $_POST['email'];
-	$pass = md5($_POST['password']);
+	$password = md5($_POST['password']);
 	$name = $_POST['nama'];
 	$alamat = $_POST['alamat'];
 	$jk = $_POST['jk'];
@@ -11,7 +11,7 @@
 
 
 
-	$sql_buat = "INSERT INTO user(id_user, email, password, nama, alamat, jk,notelp	) VALUE('','$email','$pass','$name','$alamat','$jk','$notelp')";
+	$sql_buat = "INSERT INTO user(id_user, email, password, nama, alamat, jk,notelp	) VALUE('','$email','$password','$name','$alamat','$jk','$notelp')";
 
 	if (mysqli_query($conn, $sql_buat)){
 		$query = mysqli_query($conn, "SELECT * FROM user WHERE email='$email'");
