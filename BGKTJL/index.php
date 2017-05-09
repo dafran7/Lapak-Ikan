@@ -51,18 +51,31 @@
     <div id="top">
         <div class="container">
             <div class="col-md-6 offer" data-animate="fadeInDown">
-                <a href="#" class="btn btn-success btn-sm" data-animate-hover="shake">Offer of the day</a>  <?php if($_SESSION['status'] == "User") echo $result['email']; else echo 'Member Area'; ?>
+
             </div>
             <div class="col-md-6" data-animate="fadeInDown">
                 <ul class="menu">
+                  <?php if($_SESSION['status'] == "User") {?>
+                    <li><a href="customer-account.php"> <?php echo $result['nama']?></a>
+                    </li>
+                        <!-- Seller page-->
+                    <?php if($result['jenis']==1) {?>
+                      <li><a href="seller/index.html">Seller page</a>
+                      </li>
+                    <?php } ?>
+                    <li><a href="modules/logout.php">Logout</a>
+                    </li>
+                  <?php } else { ?>
                     <li><a href="#" data-toggle="modal" data-target="#login-modal">Login</a>
                     </li>
-                    <li><a href="register.php">Register</a>
+                  <?php } ?>
+                  <!-- Changes
+                   <li><a href="contact.html">Contact</a>
                     </li>
-                    <li><a href="contact.html">Contact</a>
-                    </li>
+
                     <li><a href="#">Recently viewed</a>
                     </li>
+                  -->
                 </ul>
             </div>
         </div>
@@ -362,6 +375,7 @@
                             </li>
                         </ul>
                     </li>
+
                 </ul>
 
             </div>
@@ -412,68 +426,11 @@
 
         <div id="content">
 
-            <div class="container">
-                <div class="col-md-12">
-                    <div id="main-slider">
-                        <div class="item">
-                            <img src="img/main-slider1.jpg" alt="" class="img-responsive">
-                        </div>
-                        <div class="item">
-                            <img class="img-responsive" src="img/main-slider2.jpg" alt="">
-                        </div>
-                        <div class="item">
-                            <img class="img-responsive" src="img/main-slider3.jpg" alt="">
-                        </div>
-                        <div class="item">
-                            <img class="img-responsive" src="img/main-slider4.jpg" alt="">
-                        </div>
-                    </div>
-                    <!-- /#main-slider -->
-                </div>
-            </div>
+            
 
             <!-- *** ADVANTAGES HOMEPAGE ***
  _________________________________________________________ -->
-            <div id="advantages">
 
-                <div class="container">
-                    <div class="same-height-row">
-                        <div class="col-sm-4">
-                            <div class="box same-height clickable">
-                                <div class="icon"><i class="fa fa-heart"></i>
-                                </div>
-
-                                <h3><a href="#">We love our customers</a></h3>
-                                <p>We are known to provide best possible service ever</p>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-4">
-                            <div class="box same-height clickable">
-                                <div class="icon"><i class="fa fa-tags"></i>
-                                </div>
-
-                                <h3><a href="#">Best prices</a></h3>
-                                <p>You can check that the height of the boxes adjust when longer text like this one is used in one of them.</p>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-4">
-                            <div class="box same-height clickable">
-                                <div class="icon"><i class="fa fa-thumbs-up"></i>
-                                </div>
-
-                                <h3><a href="#">100% satisfaction guaranteed</a></h3>
-                                <p>Free returns on everything for 3 months.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.row -->
-
-                </div>
-                <!-- /.container -->
-
-            </div>
             <!-- /#advantages -->
 
             <!-- *** ADVANTAGES END *** -->

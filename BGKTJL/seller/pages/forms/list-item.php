@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <?php
-  include "modules/connect.php";
+	include "modules/connect.php";
+	if($_SESSION['status'] == "User"){
+		$id = $_SESSION['id'];
+	$query = mysqli_query($conn, "SELECT * FROM user WHERE id_user = '$id'");
+	$result = mysqli_fetch_array($query);
+	$id_usr = $result['id_user'];
+	$qry_item = mysqli_query($conn, "SELECT * FROM item WHERE id_user='$id'");
+
+}
 ?>
 <html>
 <head>
@@ -515,65 +523,39 @@
     <section class="content">
 
   <div class="text-center">
-    <h1>Tambah Item Baru</h1>
+    <h1>List Item</h1>
     <hr /><br />
   </div>
-  <form class="col-md-7 col-md-offset-2 form-horizontal" name="post" action="modules/post_item.php" method="POST" enctype="multipart/form-data">
-    <div class="form-group">
-      <label class="col-sm-4 control-label">Nama Item</label>
-      <div class="col-sm-8">
-        <input name="nama_item" type="text" class="form-control" placeholder="Nama Item">
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="col-sm-4 control-label">Quantity</label>
-      <div class="col-sm-8">
-        <input name="quantity" type="text" class="form-control" placeholder="Quantity">
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="col-sm-4 control-label">Harga</label>
-      <div class="col-sm-8">
-        <input name="harga" type="text" class="form-control" placeholder="Harga">
-      </div>
-    </div>
-
-  <div class="form-group">
-      <label class="col-sm-4 control-label">Berat</label>
-      <div class="col-sm-8">
-        <input name="berat" type="text" class="form-control" placeholder="Berat">
-      </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-sm-4 control-label">Diskon</label>
-        <div class="col-sm-8">
-          <input name="diskon" type="text" class="form-control" placeholder="Diskon">
-        </div>
-      </div>
-
-      <div class="form-group">
-          <label class="col-sm-4 control-label">Deskripsi</label>
-          <div class="col-sm-8">
-            <input name="deskripsi_item" type="text" class="form-control-desc">
-          </div>
-        </div>
-      <div class="form-group">
-          <label class="col-sm-4 control-label">Upload Foto</label><br>
-            <div class="col-sm-8">
-              <input type="file" accept="image/jpeg"  name="gambar_item" required/>
-              </div>
-        </div>
-        <div class="form-group">
-          <div class="text-center" style="margin-auto">
-            <br><button type="submit" class="btn btn-primary">Post Item</button>
-          </div>
-        </div>
-
-
-  </form>
+  <div style="width: 80%; margin: auto;">
+	<table class="table centered">
+	<tr>
+		<th>No</th>
+		<th>Nama Item</th>
+		<th>Harga</th>
+		<th>Deskripsi Item</th>
+		<th>Quantity</th>
+		<th colspan="2">Menu</th>
+	</tr>
+<?php
+	$count = 1;
+	while($items = mysqli_fetch_array($qry_item)){
+		echo
+		'<tr>
+      <td><a target="_blank" href="img_forest.jpg">
+  <img-small src="img_forest.jpg" alt="Forest">
+</a></td>
+			<td>'.$count++.'</td>
+			<td>'.$items['nama_item'].'</td>
+			<td>'.$items['harga'].'</td>
+			<td>'.$items['deskripsi_item'].'</td>
+			<td>'.$items['quantity'].'</td>
+			<td><a href="edit.php?id='.$items['item_id'].'"><button type="button" class="btn btn-primary">Edit</button></td>
+			<td><button type="button" class="btn btn-danger">Delete</button></td>
+		</tr>';
+	}
+?>
+	</table>
+	</div>
 
       <!-- /.row -->
     </section>

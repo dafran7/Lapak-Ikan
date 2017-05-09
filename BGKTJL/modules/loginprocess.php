@@ -10,7 +10,7 @@
 		$_SESSION['status'] = "User";
 ?>
 		<script language="javascript">alert("Login Successful");</script>
-		<script>document.location.href='../profile.php';</script>
+		<script>document.location.href='../index.php';</script>
 <?php
 	}
 	else{
