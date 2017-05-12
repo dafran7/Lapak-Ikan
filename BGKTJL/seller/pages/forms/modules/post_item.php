@@ -12,7 +12,7 @@
 
 	$file_fmt  =time().$id.'.jpg';
 	$file='gambar_item';
-	$dir='images/';
+	$dir='../images/';
 	UploadImageResize($file_fmt,$file,$dir);
 
 	function UploadImageResize($file_fmt,$file,$dir){

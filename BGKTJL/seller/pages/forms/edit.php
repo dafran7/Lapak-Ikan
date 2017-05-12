@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <?php
   include "modules/connect.php";
+  $id_item = $_GET['id'];
+  $query = mysqli_query($conn, "SELECT * FROM item WHERE item_id = '$id_item'");
+  $result = mysqli_fetch_array($query);
 ?>
 <html>
 <head>
@@ -518,46 +521,47 @@
     <h1>Tambah Item Baru</h1>
     <hr /><br />
   </div>
-  <form class="col-md-7 col-md-offset-2 form-horizontal" name="post" action="modules/post_item.php" method="POST" enctype="multipart/form-data">
+  <form class="col-md-7 col-md-offset-2 form-horizontal" name="post" action="modules/editprocess.php" method="POST" enctype="multipart/form-data">
     <div class="form-group">
       <label class="col-sm-4 control-label">Nama Item</label>
       <div class="col-sm-8">
-        <input name="nama_item" type="text" class="form-control" placeholder="Nama Item">
+        <input name="nama_item" type="text" class="form-control" value="<?php echo $result['nama_item'];?>">
       </div>
     </div>
 
     <div class="form-group">
       <label class="col-sm-4 control-label">Quantity</label>
       <div class="col-sm-8">
-        <input name="quantity" type="text" class="form-control" placeholder="Quantity">
+        <input name="quantity" type="text" class="form-control" value="<?php echo $result['quantity'];?>">
       </div>
     </div>
 
     <div class="form-group">
       <label class="col-sm-4 control-label">Harga</label>
       <div class="col-sm-8">
-        <input name="harga" type="text" class="form-control" placeholder="Harga">
+        <input name="harga" type="text" class="form-control" value="<?php echo $result['harga'];?>">
       </div>
     </div>
 
   <div class="form-group">
       <label class="col-sm-4 control-label">Berat</label>
       <div class="col-sm-8">
-        <input name="berat" type="text" class="form-control" placeholder="Berat">
+        <input name="berat" type="text" class="form-control" value="<?php echo $result['berat'];?>">
       </div>
     </div>
 
     <div class="form-group">
         <label class="col-sm-4 control-label">Diskon</label>
         <div class="col-sm-8">
-          <input name="diskon" type="text" class="form-control" placeholder="Diskon">
+          <input name="diskon" type="text" class="form-control" value="<?php echo $result['diskon'];?>">
         </div>
       </div>
 
       <div class="form-group">
           <label class="col-sm-4 control-label">Deskripsi</label>
           <div class="col-sm-8">
-            <textarea name="deskripsi_item" type="text" class="form-control-desc" rows="4" cols="50">
+            <textarea name="deskripsi_item" class="form-control-desc" rows="4" cols="50" >
+              <?php echo $result['deskripsi_item'];?>
             </textarea>
           </div>
         </div>

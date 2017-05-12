@@ -529,6 +529,7 @@
   <div style="width: 80%; margin: auto;">
 	<table class="table centered">
 	<tr>
+		<th>Thumbnail</th>
 		<th>No</th>
 		<th>Nama Item</th>
 		<th>Harga</th>
@@ -541,8 +542,8 @@
 	while($items = mysqli_fetch_array($qry_item)){
 		echo
 		'<tr>
-      <td><a target="_blank" href="img_forest.jpg">
-  <img-small src="img_forest.jpg" alt="Forest">
+      <td><a target="_blank" href="images/'.$items['gambar_item'].'">
+  <img src="images/'.$items['gambar_item'].'" alt='.$items['nama_item'].'>
 </a></td>
 			<td>'.$count++.'</td>
 			<td>'.$items['nama_item'].'</td>
