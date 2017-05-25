@@ -7,9 +7,12 @@
 	$result = mysqli_fetch_array($query);
   }
 
-  $id_item = $_GET['item_id'];
+  $id_item = $_GET['id'];
   $que_item = mysqli_query($conn, "SELECT * FROM item WHERE item_id = '$id_item'");
 	$item = mysqli_fetch_array($que_item);
+  $viewer = $item['pengunjung'];
+  $viewer++;
+  $que_visit =  mysqli_query($conn, "UPDATE item SET pengunjung = '$viewer' WHERE item_id = '$id_item'");
 ?>
 
 <html lang="en">
@@ -102,7 +105,7 @@
                         </p>
                     </div>
                     <div class="ratings">
-                        <p class="pull-right"><?php echo $item['pengunjung'] ?> visitors</p>
+                        <p class="pull-right"><?php echo $viewer ?> visitors</p>
                         <p>
                             <span class="glyphicon glyphicon-star"></span>
                             <span class="glyphicon glyphicon-star"></span>
