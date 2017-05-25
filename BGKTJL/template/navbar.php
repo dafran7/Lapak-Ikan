@@ -196,7 +196,7 @@
                         
                     }
                      else{
-                        (count($_SESSION["cart_products"]));
+                        echo (count($_SESSION['cart_products']));
                     }
                      ?> items in cart</span></a>
             </div>

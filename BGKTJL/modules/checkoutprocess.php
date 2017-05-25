@@ -14,10 +14,18 @@
 
 	$sql_data = "INSERT INTO orderdata(order_id, atasnama, harga, shipper, payment, alamat, telp) VALUE('$order_id','$nama','$harga','$delivery','$payment','$alamat','$telp')";
     "INSERT INTO orderitem(order_id, id_user, item_id, quantity, harga, alamat, id_seller) VALUE('$order_id','$id_user','','','$harga,'$alamat','')";
+    
 
-	if (mysqli_multi_query($conn, $sql_data)){
-		$query = mysqli_query($conn, "SELECT * FROM orderdata WHERE order_id='$order_id'");
-  		$result = mysqli_fetch_array($query);
+    $checker=mysqli_multi_query($conn, $sql_data);
+
+	if ($checker){
+        do{
+            if (($checker = mysqli_store_result($conn)) === false && mysqli_error($conn) != ''){
+                echo "Query Failed".mysqli_error($conn);
+            }
+        }while (mysqli_more_results($conn)&&mysqli_next_result($conn));
+    
+
 		$_SESSION['id'] = $id_user;
 		$_SESSION['status'] = "User";
 ?>
