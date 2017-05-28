@@ -203,9 +203,13 @@
             <!--/.nav-collapse -->
 
             <div class="navbar-collapse collapse right" id="search-not-mobile">
-                <form class="navbar-form" role="search">
+                <form class="navbar-form" method="post" action="modules/search_items.php">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search">
+                        <input type="text" class="form-control" name="search" placeholder="Search">
+                    <?php
+                        $current_url = urlencode($url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                        echo '<input type="hidden" name="home" value="'.$current_url.'" />';
+                    ?>
                         <span class="input-group-btn">
 
    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>

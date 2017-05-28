@@ -261,9 +261,61 @@ $current_url = urlencode($url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_
 
                     <div class="row products">
  <?php
-                        $count=0;
-            while(($data = mysqli_fetch_array($query_item))&&$count++<6)
-             {
+            $count=0;
+            if (isset($_SESSION["search_products"]) && $_SESSION["search_products"]=='fail'){
+                        echo '<h1 align="center">Fish Not Found!</h1>';
+                    }
+            elseif(isset($_SESSION["search_products"]) && count($_SESSION["search_products"])>0){
+                        foreach ($_SESSION["search_products"] as $get_item) {
+                            if($count++==6) break;
+                                 ?>
+                             <div class="col-md-4 col-sm-6">
+                                <form method="post" action="cart_update.php">
+
+                                <input type="hidden" name="item_id" value=" <?php echo $get_item['item_id']?>" />
+                                <input type="hidden" name="type" value="add" />
+                                <input type="hidden" name="return_url" value="<?php echo $current_url ?>" />
+                                <input type="hidden" size="2" maxlength="2" name="product_qty" value="1" />
+                                    <div class="product">
+                                        <div class="flip-container">
+                                            <div class="flipper">
+                                                <div class="front">
+                                                    <a href="product.php?id=<?php echo $get_item['item_id'] ?>">
+                                                        <img src="images/<?php echo $get_item['gambar_item'] ?>" alt="" class="img-responsive">
+                                                    </a>
+                                                </div>
+                                                <div class="back">
+                                                    <a href="product.php?id=<?php echo $get_item['item_id'] ?>">
+                                                        <img src="images/<?php echo $get_item['gambar_item'] ?>" alt="" class="img-responsive">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <a href="detail.html" class="invisible">
+                                            <img src="images/<?php echo $get_item['gambar_item'] ?>" alt="" class="img-responsive">
+                                        </a>
+                                        <div class="text">
+                                            <h3><a href="product.php?id=<?php echo $get_item['item_id'] ?>"><?php echo $get_item['nama_item'] ?></a></h3>
+                                            <p class="price">Rp. <?php echo $get_item['harga'] ?></p>
+                                            <p class="buttons">
+                                                <a href="detail.html" class="btn btn-default">View detail</a>
+                                                <button type="submit" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+
+                                            </p>
+
+                                        </div>
+                                        <!-- /.text -->
+                                    </div>
+           </form>
+                                </div>
+                             
+                    <?php }
+                        
+                    }
+                       
+            else{
+                    while(($data = mysqli_fetch_array($query_item))&&$count++<6)
+                     {
 ?>
                         <div class="col-md-4 col-sm-6">
                         <form method="post" action="cart_update.php">
@@ -306,7 +358,8 @@ $current_url = urlencode($url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_
                         </div>
                         <!-- /.col-md-4 -->
  <?php
-}
+                     }
+            }
 ?>   
                     </div>
                     <!-- /.products -->
