@@ -11,15 +11,7 @@
 }
 ?>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>List Data</title>
-
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-
-	<script src="js/jquery.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-</head>
+<?php include 'template/meta.php' ?>
 <body>
 	<center>
 		<h1>Daftar Item</h1><br><br>

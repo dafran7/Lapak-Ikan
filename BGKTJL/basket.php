@@ -8,45 +8,11 @@
   }
 
   $query_item = mysqli_query($conn, "SELECT * FROM item");
+  $shipping = 0;
   //$tampil_item = mysqli_query($query_item);
 ?>
 
-    <meta charset="utf-8">
-    <meta name="robots" content="all,follow">
-    <meta name="googlebot" content="index,follow,snippet,archive">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Obaju e-commerce template">
-    <meta name="author" content="Ondrej Svestka | ondrejsvestka.cz">
-    <meta name="keywords" content="">
-
-    <title>
-        Obaju : e-commerce template
-    </title>
-
-    <meta name="keywords" content="">
-
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100' rel='stylesheet' type='text/css'>
-
-    <!-- styles -->
-    <link href="css/font-awesome.css" rel="stylesheet">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/animate.min.css" rel="stylesheet">
-    <link href="css/owl.carousel.css" rel="stylesheet">
-    <link href="css/owl.theme.css" rel="stylesheet">
-
-    <!-- theme stylesheet -->
-    <link href="css/style.default.css" rel="stylesheet" id="theme-stylesheet">
-
-    <!-- your stylesheet with modifications -->
-    <link href="css/custom.css" rel="stylesheet">
-
-    <script src="js/respond.min.js"></script>
-
-    <link rel="shortcut icon" href="favicon.png">
-
-
-
-    </head>
+    <?php include 'template/meta.php' ?>
 
     <body>
 
@@ -117,8 +83,10 @@
                                                     $kuantitas = $cart_itm["product_qty"];
                                                     $product_price = $cart_itm["harga"];
                                                     $product_code = $cart_itm["item_id"];
-                                                
-                                                    $subtotal = $product_price * $kuantitas; //calculate Price x Qty
+                                                    $product_discount = $cart_itm["diskon"];
+                                                    $percent = 100;
+                                                    $subtotal_discount = $product_price * $kuantitas * $product_discount / $percent; //calculate Price x Qty
+                                                    $subtotal = $product_price * $kuantitas - $subtotal_discount;
 
                                                     $bg_color = ($b++%2==1) ? 'odd' : 'even'; //class for zebra stripe 
                                                     echo '<tr>';
@@ -126,14 +94,15 @@
                                                         echo '<td colspan="2">'.$product_name.'</td>';
                                                         echo '<td><input type="text" class="form-control" name="product_qty['.$product_code.']" value="'.$kuantitas.'" /></td>';
                                                         echo '<td>'.$currency.$product_price.'</td>';
-                                                        echo '<td>$0.00</td>';
+                                                        echo '<td>'.$product_discount.'%</td>';
                                                         echo '<td>'.$currency.$subtotal.'</td>';
                                                         echo '<td><input type="checkbox" name="remove_code[]" value="'.$product_code.'" /></td>';
                                                     '</tr>';    
                                                     $total = ($total + $subtotal);
                                                 }
-                                                $grand_total = $total + $shipping_cost; //grand total including shipping cost
-		                                        $shipping_cost = ($shipping_cost)?''. sprintf("%d", $shipping_cost).'<br />':'';
+                                                $grand_total = $total + $shipping; //grand total including shipping cost
+		                                        $shipping = ($shipping)?''. sprintf("%d", $shipping).'<br />':'';
+                                                $_SESSION["total"] = $total;
                                             }
                                         ?>
                                         </tbody>
@@ -160,12 +129,18 @@
 
                                 <div class="box-footer">
                                     <div class="pull-left">
-                                        <a href="index2.php" class="btn btn-default"><i class="fa fa-chevron-left"></i> Continue shopping</a>
+                                        <a href="index.php" class="btn btn-default"><i class="fa fa-chevron-left"></i> Continue shopping</a>
                                     </div>
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-default"><i class="fa fa-refresh"></i> Update basket</button>
-                                        <a href="checkout1.php" <button type="submit" class="btn btn-primary">Proceed to checkout <i class="fa fa-chevron-right"></i>
-                                    </button></a>
+                                        <?php
+                                        if($_SESSION['status'] != "User"){
+                                            echo '<a href="#" data-toggle="modal" data-target="#login-modal"<button type="submit" class="btn btn-primary">Proceed to checkout <i class="fa fa-chevron-right"></i></button></a>';
+                                        } else {
+                                            echo '<a href="checkout1.php" <button type="submit" class="btn btn-primary">Proceed to checkout <i class="fa fa-chevron-right"></i></button></a>';
+                                        }
+                                            ?>
+                                    
                                     </div>
                                 </div>
                                 <input type="hidden" name="return_url" value="<?php $current_url = urlencode($url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
@@ -205,13 +180,7 @@
                                         <tr>
                                             <td>Shipping and handling</td>
                                             <th>Rp
-                                                <?php echo $shipping_cost?>
-                                            </th>
-                                        </tr>
-                                        <tr>
-                                            <td>Tax</td>
-                                            <th>Rp
-                                                <?php echo $shipping_cost?>
+                                                <?php echo $shipping?>
                                             </th>
                                         </tr>
                                         <tr class="total">
@@ -251,20 +220,9 @@
 
             <!-- *** COPYRIGHT ***
 _________________________________________________________ -->
-            <div id="copyright">
-                <div class="container">
-                    <div class="col-md-6">
-                        <p class="pull-left">© 2017 LapakIkan.</p>
-
-                    </div>
-                    <div class="col-md-6">
-                        <p class="pull-right">Template by <a href="http://bootstrapious.com/e-commerce-templates">Bootstrapious</a> with support from <a href="https://kakusei.cz">Kakusei</a>
-                            <!-- Not removing these links is part of the licence conditions of the template. Thanks for understanding :) -->
-                        </p>
-                    </div>
-                </div>
-            </div>
+            <?php include 'template/copyright.php' ?>
             <!-- *** COPYRIGHT END *** -->
+
 
 
 

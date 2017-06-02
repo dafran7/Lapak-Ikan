@@ -6,7 +6,7 @@
 	$query = mysqli_query($conn, "SELECT * FROM user WHERE id_user = '$id'");
 	$result = mysqli_fetch_array($query);
   }
-
+    $refund_id=$_GET['id'];
   $query_item = mysqli_query($conn, "SELECT * FROM item");
   //$tampil_item = mysqli_query($query_item);
 ?>
@@ -33,16 +33,16 @@
                 <div class="container">
                     <div class="text-center">
                        <h1>Selamat!</h1>
-                       <h2>Order Dengan ID <?php echo $_SESSION['order_id'] ;unset($_SESSION['order_id']);?> telah diterima.<br>
-                       Silahkan Transfer sebanyak Rp.<?php echo $_SESSION['grandtotal'] ;unset($_SESSION['grandtotal']);?> ke Rekening BCA
-                       dengan Nomor Rekening 02114045</h2>
+                       <h2>Request Refund Dengan ID <?php echo $refund_id?> telah diterima.<br>
+                       Mohon tunggu 1x24 Jam untuk menunggu email resolusi selanjutnya<br>
+                       Mohon Catat Refund ID anda untuk keperluan selanjutnya</h2>
                 </div>
                 <!-- /.container -->
             </div>
             <!-- /#content -->
 
 
-            <!-- *** FOOTER ***
+                       <!-- *** FOOTER ***
         <?php include 'template/footer.php' ?>
             <!-- *** FOOTER END *** -->
 
@@ -53,6 +53,7 @@
 _________________________________________________________ -->
             <?php include 'template/copyright.php' ?>
             <!-- *** COPYRIGHT END *** -->
+
 
 
 

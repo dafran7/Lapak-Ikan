@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <?php
   include "modules/connect.php";
   if($_SESSION['status'] == "User"){
@@ -13,191 +14,176 @@
   $viewer = $item['pengunjung'];
   $viewer++;
   $que_visit =  mysqli_query($conn, "UPDATE item SET pengunjung = '$viewer' WHERE item_id = '$id_item'");
+  $current_url = urlencode($url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+    $kategori = $item['kategori'];
+  if($_SESSION['status'] == "User"){
+   	$id = $_SESSION['id'];
+	$query = mysqli_query($conn, "SELECT * FROM user WHERE id_user = '$id'");
+	$result = mysqli_fetch_array($query);
+  }
+  if($kategori == "allcategory") {
+      $query_item = mysqli_query($conn, "SELECT * FROM item ORDER BY fresh DESC");
+  }
+  else {
+      $query_item = mysqli_query($conn, "SELECT * FROM item WHERE kategori = '$kategori' ORDER BY fresh DESC");
+  }
 ?>
 
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Title -->
-    <title><?php echo $item['nama_item']?> | Lapak Ikan</title>
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    </head>
-    <body>
-
-      <nav class="navbar navbar-inverse">
-    	  <div class="container container-fluid">
-    	    <div class="navbar-header">
-    	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-dropdown" aria-expanded="false">
-    	        <span class="sr-only">Toggle navigation</span>
-    	        <span class="icon-bar"></span>
-    	        <span class="icon-bar"></span>
-    	        <span class="icon-bar"></span>
-    	      </button>
-    	      <a class="navbar-brand" href="#">Agriweb</a>
-    	    </div>
-    	    <div class="collapse navbar-collapse" id="nav-dropdown">
-    	      <ul class="nav navbar-nav navbar-right">
-    	        <li><a href="index.php">Home</a></li>
-    	        <li><a href="about.php">About</a></li>
-    	        <li><a href="contact.php">Contact</a></li>
-    	        <li class="dropdown">
-    	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-    	          	<?php if($_SESSION['status'] == "User") echo $result['nama']; else echo 'Member Area'; ?>
-    	          <span class="caret"></span></a>
-    	          <ul class="dropdown-menu">
-    	          	<?php if($_SESSION['status'] == "User") {?>
-    	            	<li><a href="profile.php">Profile</a></li>
-    	            	<li><a href="modules/logout.php">Logout</a></li>
-    	            <?php } else { ?>
-    					<li><a href="login.php">Login</a></li>
-    	            	<li><a href="register.php">Register</a></li>
-    	            <?php } ?>
-    	          </ul>
-    	        </li>
-    	      </ul>
-    	    </div>
-    	  </div>
-    	</nav>
-    <!-- Custom CSS -->
-
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-</head>
+<?php include 'template/meta.php' ?>
 
 <body>
+    <!-- *** TOPBAR ***
+ _________________________________________________________ -->
+    <?php include 'template/topbar.php' ?>
+    <!-- *** TOP BAR END *** -->
 
-    <!-- Page Content -->
-    <div class="container">
+    <!-- *** NAVBAR ***
+ _________________________________________________________ -->
 
-        <div class="row">
+    <?php include 'template/navbar.php' ?>
+    <!-- *** NAVBAR END *** -->
 
-            <div class="col-md-3">
-                <p class="lead">Shop Name</p>
-                <div class="list-group">
-                    <a href="#" class="list-group-item active">Category 1</a>
-                    <a href="#" class="list-group-item">Category 2</a>
-                    <a href="#" class="list-group-item">Category 3</a>
+    <div id="all">
+
+        <div id="content">
+            <div class="container">
+
+                <div class="col-md-12">
+                    <ul class="breadcrumb">
+                        
+                        <li><?php echo $item['nama_item']?></li>
+                    </ul>
+
                 </div>
-            </div>
 
-            <div class="col-md-9">
+                <div class="col-md-3">
+                    <!-- *** MENUS AND FILTERS ***
+ _________________________________________________________ -->
+                    <div class="panel panel-default sidebar-menu">
 
-                <div class="thumbnail">
-                    <img class="img-responsive" src="images/<?php echo $item['gambar_item']?>" alt=<?php echo $item['nama_item']?>>
-                    <div class="caption-full">
-                        <h4 class="pull-right">Rp<?php echo $item['harga']?></h4>
-                        <h4><a href="#"><?php echo $item['nama_item']?></a>
-                        </h4>
-                        <p>          <?php echo $item['penjualan']?> sold </p>
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Kategori</h3>
+                        </div>
+
+                        <div class="panel-body">
+                            <ul class="nav nav-pills nav-stacked category-menu">
+                                <li <?php if($kategori=="allcategory") {?> class="active" <?php } ?>>
+                                    <a href="category.php?kategori=allcategory">Semua Kategori </a>
+                                </li >
+                                <li<?php if($kategori=="konsumsi") {?> class="active" <?php } ?>>
+                                    <a href="category.php?kategori=konsumsi">Ikan Konsumsi </a>
+                                </li>
+                                <li <?php if($kategori=="hias") {?> class="active" <?php } ?>>
+                                    <a href="category.php?kategori=hias">Ikan Hias </a>
+                                </li>
+                                <li <?php if($kategori=="aksesoris") {?> class="active" <?php } ?>>
+                                    <a href="category.php?kategori=aksesoris">Aksesoris </a>
+                                </li>
+
+                            </ul>
+
+                        </div>
+                    </div>
+
+                    <!-- *** MENUS AND FILTERS END *** -->
+
+                    <div class="banner">
+                        <a href="#">
+                            <img src="img/banner.jpg" alt="sales 2014" class="img-responsive">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-md-9">
+                  <div class="box">
+                    <div class="row" id="productMain">
+                        <div class="col-sm-6">
+                            <div>
+                                <img src="images/<?php echo $item['gambar_item']?>" alt=<?php echo $item['nama_item']?> class="img-responsive">
+                            </div>
+                    </div>
+
+                        <form method="post" action="cart_update.php">
+                            <input type="hidden" name="item_id" value=" <?php echo $id_item?>" />
+                            <input type="hidden" name="type" value="add" />
+                            <input type="hidden" name="return_url" value="<?php echo $current_url ?>" />
+                            <input type="hidden" maxlength="2" name="product_qty" value="1" required/>
+                        <div class="col-sm-6">
+                                <h1 class="text-center"><?php echo $item['nama_item']?></h1>
+                                <p class="goToDescription"><a href="#details" class="scroll-to">Scroll to product details</a>
+                                </p>
+                                <p class="price">Rp.<?php echo $item['harga']?></p>
+
+                                <p class="text-center buttons">
+
+                                    <button type="submit" class="btn btn-primary" ><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                </p>
+
+
+                            </div>
+                        </form>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="box" id="details">
                         <p>
-                          <?php echo $item['deskripsi_item']?>
+                            <h4>Product details</h4>
+                            <p><?php echo nl2br($item['deskripsi_item']);?></p>
 
-                        </p>
-                    </div>
-                    <div class="ratings">
-                        <p class="pull-right"><?php echo $viewer ?> visitors</p>
-                        <p>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star-empty"></span>
-                            4.0 stars
-                        </p>
-                    </div>
-                </div>
-
-                <div class="well">
-
-                    <div class="text-right">
-                        <a class="btn btn-success">Leave a Review</a>
-                    </div>
-
-                    <hr>
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star-empty"></span>
-                            Anonymous
-                            <span class="pull-right">10 days ago</span>
-                            <p>This product was great in terms of quality. I would definitely buy another!</p>
+                           
                         </div>
-                    </div>
 
-                    <hr>
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star-empty"></span>
-                            Anonymous
-                            <span class="pull-right">12 days ago</span>
-                            <p>I've alredy ordered another one!</p>
-                        </div>
-                    </div>
-
-                    <hr>
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star-empty"></span>
-                            Anonymous
-                            <span class="pull-right">15 days ago</span>
-                            <p>I've seen some better than this, but not at this price. I definitely recommend this item.</p>
-                        </div>
                     </div>
 
                 </div>
-
+                <!-- /.col-md-9 -->
             </div>
-
+            <!-- /.container -->
         </div>
+        <!-- /#content -->
+
+
+                   <!-- *** FOOTER ***
+        <?php include 'template/footer.php' ?>
+            <!-- *** FOOTER END *** -->
+
+
+
+
+            <!-- *** COPYRIGHT ***
+_________________________________________________________ -->
+            <?php include 'template/copyright.php' ?>
+            <!-- *** COPYRIGHT END *** -->
+
+
+
 
     </div>
-    <!-- /.container -->
+    <!-- /#all -->
 
-    <div class="container">
 
-        <hr>
 
-        <!-- Footer -->
-        <footer>
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Copyright &copy; Your Website 2014</p>
-                </div>
-            </div>
-        </footer>
 
-    </div>
-    <!-- /.container -->
-
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
+    <!-- *** SCRIPTS TO INCLUDE ***
+ _________________________________________________________ -->
+    <script src="js/jquery-1.11.0.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.cookie.js"></script>
+    <script src="js/waypoints.min.js"></script>
+    <script src="js/modernizr.js"></script>
+    <script src="js/bootstrap-hover-dropdown.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/front.js"></script>
+
+
+
+
+
 
 </body>
 
