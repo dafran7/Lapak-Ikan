@@ -7,7 +7,7 @@
   $result = mysqli_fetch_array($query);
 	if ($result) {
 	$_SESSION['id'] = $result['id_user'];
-		$_SESSION['status'] = "User";
+		$_SESSION['status'] = "Admin";
 ?>
 		<script language="javascript">alert("Login Successful");</script>
 		<script>document.location.href='../index.php';</script>

@@ -5,7 +5,8 @@
 
 	$sql_data = "UPDATE seller SET approval = '$value' WHERE id_user = '$id'";
     $sql_user = "UPDATE user SET jenis = '$value' WHERE id_user = '$id'";
-	if (mysqli_query($conn, $sql_data)){
+
+	if (mysqli_query($conn, $sql_data) && mysqli_query($conn, $sql_user)){
 ?>
 		<script language="javascript">alert("Approval Sucessful");</script>
 		<script>document.location.href='../seller.php';</script>

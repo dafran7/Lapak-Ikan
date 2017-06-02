@@ -1127,6 +1127,7 @@ img {
 .img-rounded {
   border-radius: 6px;
 }
+.w3-select {padding:9px 0;width:100%;border:none;border-bottom:1px solid #ccc}
 .img-thumbnail {
   display: inline-block;
   max-width: 100%;
