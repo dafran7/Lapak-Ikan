@@ -6,13 +6,13 @@ _________________________________________________________ -->
                             <h4>Pages</h4>
 
                             <ul>
-                                <li><a href="text.html">About us</a>
+                                <li><a href="about-us.php">About us</a>
                                 </li>
-                                <li><a href="text.html">Terms and conditions</a>
+                                <li><a href="term-condition.php">Terms and conditions</a>
                                 </li>
-                                <li><a href="faq.html">FAQ</a>
+                                <li><a href="faq.php">FAQ</a>
                                 </li>
-                                <li><a href="contact.html">Contact us</a>
+                                <li><a href="contact.php">Contact us</a>
                                 </li>
                             </ul>
 
@@ -46,39 +46,39 @@ _________________________________________________________ -->
 
 
 
-                        <div class="col-md-4 col-sm-6">
+                            <div class="col-md-4 col-sm-6">
 
-                            <h4>Subscibe to our Newsletter</h4>
+                                <h4>Subscibe to our Newsletter</h4>
 
-                            <form>
-                                <div class="input-group">
+                                <form>
+                                    <div class="input-group">
 
-                                    <input type="text" class="form-control">
+                                        <input type="text" class="form-control">
 
-                                    <span class="input-group-btn">
+                                        <span class="input-group-btn">
 
-  <button class="btn btn-default" type="button">Subscribe!</button>
+      <button class="btn btn-default" type="button">Subscribe!</button>
 
-</span>
+    </span>
 
-                                </div>
-                                <!-- /input-group -->
-                            </form>
+                                    </div>
+                                    <!-- /input-group -->
+                                </form>
 
-                            <hr>
+                                <hr>
 
-                            <h4>Stay in touch</h4>
+                                <h4>Stay in touch</h4>
 
-                            <p class="social">
-                                <a href="#" class="facebook external" data-animate-hover="shake"><i class="fa fa-facebook"></i></a>
-                                <a href="#" class="twitter external" data-animate-hover="shake"><i class="fa fa-twitter"></i></a>
-                                <a href="#" class="instagram external" data-animate-hover="shake"><i class="fa fa-instagram"></i></a>
-                                <a href="#" class="gplus external" data-animate-hover="shake"><i class="fa fa-google-plus"></i></a>
-                                <a href="#" class="email external" data-animate-hover="shake"><i class="fa fa-envelope"></i></a>
-                            </p>
+                                <p class="social">
+                                    <a href="#" class="facebook external" data-animate-hover="shake"><i class="fa fa-facebook"></i></a>
+                                    <a href="#" class="twitter external" data-animate-hover="shake"><i class="fa fa-twitter"></i></a>
+                                    <a href="#" class="instagram external" data-animate-hover="shake"><i class="fa fa-instagram"></i></a>
+                                    <a href="#" class="gplus external" data-animate-hover="shake"><i class="fa fa-google-plus"></i></a>
+                                    <a href="#" class="email external" data-animate-hover="shake"><i class="fa fa-envelope"></i></a>
+                                </p>
 
 
-                        </div>
+                            </div>
                         <!-- /.col-md-3 -->
 
                     </div>

@@ -10,7 +10,7 @@
                     </li>
                         <!-- Seller page-->
                     <?php if($result['jenis']==1) {?>
-                      <li><a href="seller/index.php">Seller page</a>
+                      <li><a href="index-seller.php">Seller page</a>
                       </li>
                     <?php } ?>
                     <li><a href="modules/logout.php">Logout</a>
