@@ -17,6 +17,7 @@
 ?>
 
 		<script language="javascript">alert("Login Failed");</script>
+		<script>document.location.href='../index.php';</script>
 
 <?php
 	}

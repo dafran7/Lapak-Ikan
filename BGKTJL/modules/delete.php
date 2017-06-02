@@ -11,7 +11,7 @@
 	}
 	else{
 ?>
-		<script language="javascript">alert("Something Wrong. Delete Item Failed");</script>
+		<script language="javascript">alert("OOPS! Something Wrong. Delete Item Failed");</script>
 		<script>document.location.href='../list-item.php';</script>
 <?php
 	}

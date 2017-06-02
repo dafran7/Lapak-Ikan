@@ -11,12 +11,13 @@
     $harga = $_SESSION['grandtotal'];
     $id_user=$_SESSION['id'];
     unset($_SESSION['nama']);
+    unset($_SESSION['shipcost']);
     unset($_SESSION['alamat']);
     unset($_SESSION['telp']);
     unset($_SESSION['email']);
     unset($_SESSION['delivery']);
     unset($_SESSION['payment']);
-    unset($_SESSION['grandtotal']);
+    
     $total = 0; //set initial total value
     $_SESSION['order_id']=$order_id;                                     
 
@@ -34,7 +35,11 @@
                                                     $data  = mysqli_fetch_array($hasil);
                                                     $id_seller=$data['id_user'];
                                                     $sql_item[$i] = "INSERT INTO orderbiji(order_id,item_id,id_user,quantity,harga,alamat,id_seller) VALUE('$order_id','$product_code','$id_user','$kuantitas','$product_price','$alamat','$id_seller')";
-                                                    
+                                                    $sql_need = mysqli_query($conn,"SELECT * FROM item WHERE item_id='$product_code'");
+                                                    $item = mysqli_fetch_array($sql_need);
+                                                    $ttl_sold = $item['penjualan'];
+                                                    $ttl_sold = $ttl_sold + $kuantitas;
+                                                    mysqli_query($conn, "UPDATE item SET penjualan = '$ttl_sold' WHERE item_id = '$product_code'");
                                                     $i=$i+1;
                                                 }
         $grand_total = $total + $shipping_cost; //grand total including shipping cost
@@ -60,7 +65,7 @@
 		$_SESSION['status'] = "User";
 ?>
     <script language="javascript">
-        alert("Register Successful");
+        alert("Successful");
     </script>
     <script>
        document.location.href='../landing-page.php';
@@ -70,7 +75,7 @@
 	else{
 ?>
     <script language="javascript">
-        alert("Register Failed");
+        alert("Error has occured");
     </script>
 
     <?php

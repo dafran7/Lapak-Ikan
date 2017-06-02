@@ -1,7 +1,5 @@
 <?php
-
 include_once("modules/connect.php");
-
 //add product to session or create new one
 if(isset($_POST["type"]) && $_POST["type"]=='add' && $_POST["product_qty"]>0)
 {
@@ -13,16 +11,17 @@ if(isset($_POST["type"]) && $_POST["type"]=='add' && $_POST["product_qty"]>0)
 	unset($new_product['return_url']); 
 	
  	//we need to get product name and price from database.
-    $statement = $mysqli->prepare("SELECT nama_item, harga FROM item WHERE item_id=? LIMIT 1");
+    $statement = $mysqli->prepare("SELECT nama_item, harga, diskon FROM item WHERE item_id=? LIMIT 1");
     $statement->bind_param('i', $new_product['item_id']);
     $statement->execute();
-    $statement->bind_result($nama_item, $harga);
+    $statement->bind_result($nama_item, $harga, $diskon);
 	
 	while($statement->fetch()){
 		
 		//fetch product name, price from db and add to new_product array
         $new_product["nama_item"] = $nama_item;
         $new_product["harga"] = $harga;
+        $new_product["diskon"] = $diskon;
         
         if(isset($_SESSION["cart_products"])){  //if session var already exist
             if(isset($_SESSION["cart_products"][$new_product['item_id']])) //check item exist in products array
@@ -33,8 +32,6 @@ if(isset($_POST["type"]) && $_POST["type"]=='add' && $_POST["product_qty"]>0)
         $_SESSION["cart_products"][$new_product['item_id']] = $new_product; //update or create product session with new item  
     } 
 }
-
-
 //update or remove items 
 if(isset($_POST["product_qty"]) || isset($_POST["remove_code"]))
 {
@@ -53,9 +50,8 @@ if(isset($_POST["product_qty"]) || isset($_POST["remove_code"]))
 		}	
 	}
 }
-
 //back to return url
-$return_url = (isset($_POST["return_url"]))?urldecode($_POST["return_url"]):''; //return url
+$return_url = (isset($_POST["return_url"]))?urldecode($_POST["return_url"]):''; 
 header('Location:'.$return_url);
-
+echo $return_url;
 ?>

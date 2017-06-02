@@ -4,8 +4,10 @@ include_once("connect.php");
 include_once("functions.php");
 
 //add product to session or create new one
+$_SESSION["search"] = "";
 if(isset($_POST["search"]) && $_POST["search"]!='')
 {
+    $_SESSION["search"] = $_POST["search"];
     if(isset($_SESSION["search_products"])){
         unset($_SESSION["search_products"]);
     }
@@ -35,7 +37,11 @@ if(isset($_POST["search"]) && $_POST["search"]!='')
     if(count($_SESSION["search_products"])==0) $_SESSION["search_products"] = 'fail';
 }
 
-$return = (isset($_POST["home"]))?urldecode($_POST["home"]):''; //return url
+if(isset($_POST["home"]) && urldecode($_POST["home"])!="http://localhost/BGKTJL/search.php"){
+    $return = 'http://localhost/BGKTJL/search.php';
+} else {
+    $return = (isset($_POST["home"]))?urldecode($_POST["home"]):'';
+}
 header('Location:'.$return);
 
 ?>
